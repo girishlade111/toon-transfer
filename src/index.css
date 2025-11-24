@@ -6,88 +6,88 @@
 
 @layer base {
   :root {
-    /* Dark Navy Theme - Default */
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
+    /* Matte Black & White Theme */
+    --background: 0 0% 8%;
+    --foreground: 0 0% 98%;
 
-    --card: 217 32% 17%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 217 32% 17%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 98%;
 
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 217 32% 20%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 217 32% 17%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 217 32% 17%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 0 0% 14%;
+    --accent-foreground: 0 0% 98%;
 
-    --success: 142 76% 36%;
-    --success-foreground: 210 40% 98%;
+    --success: 0 0% 98%;
+    --success-foreground: 0 0% 8%;
 
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 0% 30%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 217 32% 24%;
-    --input: 217 32% 17%;
-    --ring: 221 83% 53%;
+    --border: 0 0% 20%;
+    --input: 0 0% 14%;
+    --ring: 0 0% 100%;
 
     --radius: 0.75rem;
-    
+
     /* Progress colors */
-    --progress-bg: 217 32% 24%;
-    --progress-fill: 142 76% 36%;
-    
+    --progress-bg: 0 0% 20%;
+    --progress-fill: 0 0% 98%;
+
     /* Status colors */
-    --status-active: 142 76% 36%;
-    --status-optional: 43 74% 66%;
-    
+    --status-active: 0 0% 98%;
+    --status-optional: 0 0% 50%;
+
     /* Shadows */
-    --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.3);
-    --shadow-glow: 0 0 20px rgb(59 130 246 / 0.3);
-    
+    --shadow-card: 0 4px 6px -1px rgb(0 0 0 / 0.5);
+    --shadow-glow: 0 0 20px rgb(255 255 255 / 0.1);
+
     /* Transitions */
     --transition-smooth: all 0.2s ease-in-out;
 
-    --sidebar-background: 222 47% 11%;
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 221 83% 53%;
-    --sidebar-primary-foreground: 210 40% 98%;
-    --sidebar-accent: 217 32% 17%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 32% 24%;
-    --sidebar-ring: 221 83% 53%;
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 0 0% 98%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 14%;
+    --sidebar-accent-foreground: 0 0% 98%;
+    --sidebar-border: 0 0% 20%;
+    --sidebar-ring: 0 0% 100%;
   }
 
   .dark {
-    /* Same as root for consistent dark theme */
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
-    --card: 217 32% 17%;
-    --card-foreground: 210 40% 98%;
-    --popover: 217 32% 17%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 221 83% 53%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 217 32% 20%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 32% 17%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 217 32% 17%;
-    --accent-foreground: 210 40% 98%;
-    --success: 142 76% 36%;
-    --success-foreground: 210 40% 98%;
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217 32% 24%;
-    --input: 217 32% 17%;
-    --ring: 221 83% 53%;
+    /* Same as root for consistent theme */
+    --background: 0 0% 8%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 12%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 12%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14%;
+    --muted-foreground: 0 0% 60%;
+    --accent: 0 0% 14%;
+    --accent-foreground: 0 0% 98%;
+    --success: 0 0% 98%;
+    --success-foreground: 0 0% 8%;
+    --destructive: 0 0% 30%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 20%;
+    --input: 0 0% 14%;
+    --ring: 0 0% 100%;
   }
 }
 
@@ -105,27 +105,27 @@
   .smooth-hover {
     transition: var(--transition-smooth);
   }
-  
+
   .smooth-hover:hover {
     transform: translateY(-1px);
   }
-  
+
   .shadow-card {
     box-shadow: var(--shadow-card);
   }
-  
+
   .shadow-glow {
     box-shadow: var(--shadow-glow);
   }
-  
+
   .status-badge {
     @apply inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-medium;
   }
-  
+
   .status-active {
     @apply bg-success/10 text-success border border-success/20;
   }
-  
+
   .status-optional {
     @apply bg-muted text-muted-foreground border border-border;
   }
