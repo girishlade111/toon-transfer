@@ -236,10 +236,10 @@ const Index = () => {
               </div>
             </div>
 
-            {/* Bottom action buttons */}
-            <div className="flex gap-4 mt-8">
+            {/* Bottom action button */}
+            <div className="mt-8">
               <Button
-                className="flex-1 bg-white text-black hover:bg-white/90 font-semibold"
+                className="w-full bg-white text-black hover:bg-white/90 font-semibold"
                 onClick={() => {
                   if (uploadedFile && !fileSettings) {
                     // Trigger settings completion with default values
@@ -249,18 +249,6 @@ const Index = () => {
               >
                 <Archive className="w-4 h-4 mr-2" />
                 Generate Secure Link
-              </Button>
-              <Button
-                variant="outline"
-                className="flex-1 bg-black text-white border-white/20 hover:bg-black/80"
-                onClick={() => {
-                  if (generatedLink) {
-                    window.open(generatedLink, '_blank');
-                  }
-                }}
-              >
-                <LinkIcon className="w-4 h-4 mr-2" />
-                Test Download
               </Button>
             </div>
           </div>
