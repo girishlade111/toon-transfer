@@ -61,11 +61,11 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="px-8 py-6">
+      <header className="px-8 py-6 animate-fade-in">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center">
-              <Archive className="w-7 h-7 text-primary" />
+            <div className="w-12 h-12 rounded-xl overflow-hidden">
+              <img src="/logo.png" alt="GB Transfer Logo" className="w-full h-full object-cover" />
             </div>
             <div>
               <h1 className="text-xl font-bold text-foreground">LadeShare Demo</h1>
@@ -73,17 +73,17 @@ const Index = () => {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-success/20 border border-success/30 rounded-full">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-success/20 border border-success/30 rounded-full animate-pulse-glow">
               <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
               <span className="text-xs font-medium text-success">Live Demo</span>
             </div>
             <Link to="/dashboard">
-              <Button variant="ghost" size="sm" className="text-muted-foreground">
+              <Button variant="ghost" size="sm" className="text-muted-foreground scale-hover-sm">
                 Dashboard
               </Button>
             </Link>
             <Link to="/about">
-              <Button variant="ghost" size="sm" className="text-muted-foreground">
+              <Button variant="ghost" size="sm" className="text-muted-foreground scale-hover-sm">
                 About
               </Button>
             </Link>
@@ -94,7 +94,7 @@ const Index = () => {
       {/* Main content */}
       <main className="px-8 pb-12">
         <div className="max-w-7xl mx-auto">
-          <div className="bg-card border border-border rounded-2xl p-8 shadow-card">
+          <div className="bg-card border border-border rounded-2xl p-8 shadow-card animate-slide-up shadow-card-hover">
             {/* Upload complete status - shown when file is uploaded */}
             {uploadedFile && (
               <div className="mb-8">
@@ -177,28 +177,28 @@ const Index = () => {
                   <h3 className="font-bold text-lg">Security Features</h3>
                 </div>
                 <div className="space-y-3">
-                  <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between">
+                  <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between scale-hover-sm shadow-card-hover">
                     <div className="flex items-center gap-3">
                       <Shield className="w-5 h-5 text-success" />
                       <span className="font-medium">AES-256 Encryption</span>
                     </div>
                     <span className="status-badge status-active">active</span>
                   </div>
-                  <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between">
+                  <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between scale-hover-sm shadow-card-hover delay-100">
                     <div className="flex items-center gap-3">
                       <Clock className="w-5 h-5 text-success" />
                       <span className="font-medium">Auto Expiry (24h)</span>
                     </div>
                     <span className="status-badge status-active">active</span>
                   </div>
-                  <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between">
+                  <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between scale-hover-sm shadow-card-hover delay-200">
                     <div className="flex items-center gap-3">
                       <Shield className="w-5 h-5 text-muted-foreground" />
                       <span className="font-medium">Password Protection</span>
                     </div>
                     <span className="status-badge status-optional">optional</span>
                   </div>
-                  <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between">
+                  <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between scale-hover-sm shadow-card-hover delay-300">
                     <div className="flex items-center gap-3">
                       <Eye className="w-5 h-5 text-success" />
                       <span className="font-medium">Download Tracking</span>
@@ -216,7 +216,7 @@ const Index = () => {
                 </div>
                 <div className="space-y-3">
                   {uploadedFile ? (
-                    <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between">
+                    <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between scale-hover-sm shadow-card-hover">
                       <div className="flex items-center gap-3 flex-1 min-w-0">
                         {getFileIcon(uploadedFile.name)}
                         <div className="flex-1 min-w-0">
@@ -240,7 +240,7 @@ const Index = () => {
             {/* Bottom action button */}
             <div className="mt-8">
               <Button
-                className="w-full bg-white text-black hover:bg-white/90 font-semibold"
+                className="w-full bg-white text-black hover:bg-white/90 font-semibold scale-hover shadow-glow-hover"
                 onClick={() => {
                   if (uploadedFile && !fileSettings) {
                     // Trigger settings completion with default values
