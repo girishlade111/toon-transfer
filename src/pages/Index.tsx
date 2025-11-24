@@ -5,6 +5,7 @@ import FileSettings from "@/components/FileSettings";
 import LinkDisplay from "@/components/LinkDisplay";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
@@ -160,9 +161,7 @@ const Index = () => {
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 text-center py-8 text-sm text-muted-foreground">
-        <p>Made with ✨ by Girish Lade</p>
-      </footer>
+      <Footer />
     </div>
   );
 };
