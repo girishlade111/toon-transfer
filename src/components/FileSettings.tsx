@@ -31,15 +31,15 @@ const FileSettings = ({ file, onComplete, onCancel }: FileSettingsProps) => {
   };
 
   return (
-    <div className="bg-card border-2 border-border rounded-3xl p-8 shadow-toon animate-bounce-in">
-      <h3 className="text-2xl font-bold mb-6 flex items-center gap-2">
-        <FileText className="w-6 h-6 text-primary" />
+    <div className="bg-secondary border border-border rounded-xl p-6 shadow-card">
+      <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+        <FileText className="w-5 h-5 text-primary" />
         Configure Your Transfer
       </h3>
 
       {/* File info */}
-      <div className="bg-muted rounded-xl p-4 mb-6">
-        <p className="font-semibold truncate">{file.name}</p>
+      <div className="bg-muted rounded-lg p-4 mb-6">
+        <p className="font-semibold truncate text-foreground">{file.name}</p>
         <p className="text-sm text-muted-foreground">{formatFileSize(file.size)}</p>
       </div>
 
@@ -47,7 +47,7 @@ const FileSettings = ({ file, onComplete, onCancel }: FileSettingsProps) => {
       <div className="space-y-4 mb-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Lock className="w-5 h-5 text-secondary" />
+            <Lock className="w-5 h-5 text-primary" />
             <Label htmlFor="password-toggle" className="font-semibold">Password Protection</Label>
           </div>
           <Switch
@@ -58,7 +58,7 @@ const FileSettings = ({ file, onComplete, onCancel }: FileSettingsProps) => {
         </div>
 
         {usePassword && (
-          <div className="animate-slide-up">
+          <div className="transition-all">
             <Label htmlFor="password">Enter Password</Label>
             <Input
               id="password"
@@ -75,7 +75,7 @@ const FileSettings = ({ file, onComplete, onCancel }: FileSettingsProps) => {
       {/* Expiry time */}
       <div className="space-y-4 mb-6">
         <div className="flex items-center gap-2">
-          <Clock className="w-5 h-5 text-accent" />
+          <Clock className="w-5 h-5 text-primary" />
           <Label htmlFor="expiry" className="font-semibold">Expiry Time</Label>
         </div>
         <Select value={expiryMinutes.toString()} onValueChange={(v) => setExpiryMinutes(parseInt(v))}>
@@ -99,12 +99,12 @@ const FileSettings = ({ file, onComplete, onCancel }: FileSettingsProps) => {
         <Button
           onClick={handleComplete}
           disabled={usePassword && !password}
-          className="flex-1 bg-primary text-white hover:bg-primary/90 bounce-hover"
+          className="flex-1 bg-primary hover:bg-primary/90"
         >
           <Check className="w-4 h-4 mr-2" />
           Generate Link
         </Button>
-        <Button variant="outline" onClick={onCancel} className="bounce-hover">
+        <Button variant="outline" onClick={onCancel}>
           Cancel
         </Button>
       </div>

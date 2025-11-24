@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { Upload, FileText, Shield, Clock, Link2 } from "lucide-react";
+import { FileText, Shield, Clock, Eye, Check, Archive, FileImage, FileVideo, Link as LinkIcon } from "lucide-react";
 import UploadZone from "@/components/UploadZone";
 import FileSettings from "@/components/FileSettings";
 import LinkDisplay from "@/components/LinkDisplay";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import Footer from "@/components/Footer";
+import { Progress } from "@/components/ui/progress";
 
 const Index = () => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
@@ -14,6 +14,7 @@ const Index = () => {
     expiryMinutes: number;
   } | null>(null);
   const [generatedLink, setGeneratedLink] = useState<string | null>(null);
+  const [uploadProgress] = useState(100);
 
   const handleFileUpload = (file: File) => {
     setUploadedFile(file);
@@ -35,133 +36,236 @@ const Index = () => {
     setGeneratedLink(null);
   };
 
-  return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-32 h-32 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 w-48 h-48 bg-accent/10 rounded-full blur-3xl animate-pulse delay-500"></div>
-      </div>
+  const getFileIcon = (fileName: string) => {
+    const ext = fileName.split('.').pop()?.toLowerCase();
+    if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'].includes(ext || '')) {
+      return <FileImage className="w-5 h-5 text-primary" />;
+    }
+    if (['mp4', 'avi', 'mov', 'wmv'].includes(ext || '')) {
+      return <FileVideo className="w-5 h-5 text-primary" />;
+    }
+    if (['pptx', 'ppt'].includes(ext || '')) {
+      return <Archive className="w-5 h-5 text-primary" />;
+    }
+    return <FileText className="w-5 h-5 text-primary" />;
+  };
 
+  const formatFileSize = (bytes: number) => {
+    if (bytes < 1024) return bytes + " B";
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+    if (bytes < 1024 * 1024 * 1024) return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+    return (bytes / (1024 * 1024 * 1024)).toFixed(1) + " GB";
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
       {/* Header */}
-      <header className="relative z-10 px-6 py-6 flex justify-between items-center">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center shadow-glow">
-            <FileText className="w-6 h-6 text-white" />
+      <header className="px-8 py-6">
+        <div className="max-w-7xl mx-auto flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 bg-primary/20 rounded-xl flex items-center justify-center">
+              <Archive className="w-7 h-7 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold text-foreground">LadeShare Demo</h1>
+              <p className="text-sm text-muted-foreground">Secure File Sharing Platform</p>
+            </div>
           </div>
-          <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
-            GB Transfer
-          </h1>
+          <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-success/20 border border-success/30 rounded-full">
+              <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
+              <span className="text-xs font-medium text-success">Live Demo</span>
+            </div>
+            <Link to="/dashboard">
+              <Button variant="ghost" size="sm" className="text-muted-foreground">
+                Dashboard
+              </Button>
+            </Link>
+            <Link to="/about">
+              <Button variant="ghost" size="sm" className="text-muted-foreground">
+                About
+              </Button>
+            </Link>
+          </div>
         </div>
-        <nav className="flex gap-4">
-          <Link to="/dashboard">
-            <Button variant="ghost" className="bounce-hover">
-              Dashboard
-            </Button>
-          </Link>
-          <Link to="/about">
-            <Button variant="ghost" className="bounce-hover">
-              About
-            </Button>
-          </Link>
-        </nav>
       </header>
 
       {/* Main content */}
-      <main className="relative z-10 container mx-auto px-6 py-12 max-w-4xl">
-        <div className="text-center mb-12 animate-slide-up">
-          <h2 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent">
-            Share Files Like a Pro ✨
-          </h2>
-          <p className="text-xl text-muted-foreground">
-            Fast, smooth, and secure file transfers with a toon-vibed twist
-          </p>
-        </div>
-
-        {/* Features */}
-        {!uploadedFile && (
-          <div className="grid md:grid-cols-3 gap-6 mb-12 animate-bounce-in">
-            <div className="bg-card border-2 border-border rounded-2xl p-6 shadow-toon bounce-hover">
-              <Upload className="w-10 h-10 text-primary mb-3" />
-              <h3 className="font-bold text-lg mb-2">Any File Type</h3>
-              <p className="text-sm text-muted-foreground">
-                Upload videos, docs, code, music - anything!
-              </p>
-            </div>
-            <div className="bg-card border-2 border-border rounded-2xl p-6 shadow-toon bounce-hover">
-              <Shield className="w-10 h-10 text-secondary mb-3" />
-              <h3 className="font-bold text-lg mb-2">Password Lock</h3>
-              <p className="text-sm text-muted-foreground">
-                Protect your files with optional passwords
-              </p>
-            </div>
-            <div className="bg-card border-2 border-border rounded-2xl p-6 shadow-toon bounce-hover">
-              <Clock className="w-10 h-10 text-accent mb-3" />
-              <h3 className="font-bold text-lg mb-2">Auto-Expiry</h3>
-              <p className="text-sm text-muted-foreground">
-                Files disappear after your chosen time
-              </p>
-            </div>
-          </div>
-        )}
-
-        {/* Upload flow */}
-        <div className="space-y-8">
-          {!uploadedFile && (
-            <UploadZone onFileUpload={handleFileUpload} />
-          )}
-
-          {uploadedFile && !fileSettings && (
-            <FileSettings
-              file={uploadedFile}
-              onComplete={handleSettingsComplete}
-              onCancel={handleReset}
-            />
-          )}
-
-          {uploadedFile && fileSettings && !generatedLink && (
-            <LinkDisplay
-              file={uploadedFile}
-              settings={fileSettings}
-              onLinkGenerated={handleLinkGenerated}
-            />
-          )}
-
-          {generatedLink && (
-            <div className="text-center space-y-4 animate-bounce-in">
-              <div className="bg-card border-2 border-primary rounded-2xl p-8 shadow-glow">
-                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Link2 className="w-8 h-8 text-white" />
+      <main className="px-8 pb-12">
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-card border border-border rounded-2xl p-8 shadow-card">
+            {/* Upload complete status - shown when file is uploaded */}
+            {uploadedFile && (
+              <div className="mb-8">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 bg-success rounded-full flex items-center justify-center">
+                    <Check className="w-6 h-6 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-semibold text-foreground">Upload complete!</p>
+                    <Progress value={uploadProgress} className="h-2 mt-2" />
+                  </div>
                 </div>
-                <h3 className="text-2xl font-bold mb-2">Link Created! 🎉</h3>
-                <p className="text-muted-foreground mb-6">
-                  Your file is ready to share
-                </p>
-                <div className="bg-muted rounded-xl p-4 mb-4 break-all text-sm font-mono">
-                  {generatedLink}
+              </div>
+            )}
+
+            {/* Upload zone - shown initially */}
+            {!uploadedFile && (
+              <div className="mb-8">
+                <UploadZone onFileUpload={handleFileUpload} />
+              </div>
+            )}
+
+            {/* File settings - shown after upload */}
+            {uploadedFile && !fileSettings && (
+              <div className="mb-8">
+                <FileSettings
+                  file={uploadedFile}
+                  onComplete={handleSettingsComplete}
+                  onCancel={handleReset}
+                />
+              </div>
+            )}
+
+            {/* Link generation - shown after settings */}
+            {uploadedFile && fileSettings && !generatedLink && (
+              <div className="mb-8">
+                <LinkDisplay
+                  file={uploadedFile}
+                  settings={fileSettings}
+                  onLinkGenerated={handleLinkGenerated}
+                />
+              </div>
+            )}
+
+            {/* Success state - shown after link is generated */}
+            {generatedLink && (
+              <div className="mb-8 text-center">
+                <div className="bg-muted rounded-xl p-6 mb-4">
+                  <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                    <LinkIcon className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2">Link Created! 🎉</h3>
+                  <p className="text-muted-foreground mb-6">Your file is ready to share</p>
+                  <div className="bg-background rounded-lg p-4 mb-4 break-all text-sm font-mono">
+                    {generatedLink}
+                  </div>
+                  <div className="flex gap-3 justify-center">
+                    <Button
+                      onClick={() => {
+                        navigator.clipboard.writeText(generatedLink);
+                      }}
+                      className="bg-primary hover:bg-primary/90"
+                    >
+                      Copy Link
+                    </Button>
+                    <Button variant="outline" onClick={handleReset}>
+                      Upload Another
+                    </Button>
+                  </div>
                 </div>
-                <div className="flex gap-3 justify-center">
-                  <Button
-                    onClick={() => {
-                      navigator.clipboard.writeText(generatedLink);
-                    }}
-                    className="bg-primary text-white hover:bg-primary/90 bounce-hover"
-                  >
-                    Copy Link
-                  </Button>
-                  <Button variant="outline" onClick={handleReset} className="bounce-hover">
-                    Upload Another
-                  </Button>
+              </div>
+            )}
+
+            {/* Two-column layout: Security Features & Recent Files */}
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Security Features */}
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <Shield className="w-5 h-5 text-primary" />
+                  <h3 className="font-bold text-lg">Security Features</h3>
+                </div>
+                <div className="space-y-3">
+                  <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Shield className="w-5 h-5 text-success" />
+                      <span className="font-medium">AES-256 Encryption</span>
+                    </div>
+                    <span className="status-badge status-active">active</span>
+                  </div>
+                  <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Clock className="w-5 h-5 text-success" />
+                      <span className="font-medium">Auto Expiry (24h)</span>
+                    </div>
+                    <span className="status-badge status-active">active</span>
+                  </div>
+                  <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Shield className="w-5 h-5 text-muted-foreground" />
+                      <span className="font-medium">Password Protection</span>
+                    </div>
+                    <span className="status-badge status-optional">optional</span>
+                  </div>
+                  <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Eye className="w-5 h-5 text-success" />
+                      <span className="font-medium">Download Tracking</span>
+                    </div>
+                    <span className="status-badge status-active">active</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Recent Files */}
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <Archive className="w-5 h-5 text-primary" />
+                  <h3 className="font-bold text-lg">Recent Files</h3>
+                </div>
+                <div className="space-y-3">
+                  {uploadedFile ? (
+                    <div className="bg-card border border-border rounded-xl p-4 flex items-center justify-between">
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
+                        {getFileIcon(uploadedFile.name)}
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium truncate">{uploadedFile.name}</p>
+                          <p className="text-sm text-muted-foreground">{formatFileSize(uploadedFile.size)}</p>
+                        </div>
+                      </div>
+                      <Check className="w-5 h-5 text-success flex-shrink-0" />
+                    </div>
+                  ) : (
+                    <div className="bg-card border border-border rounded-xl p-8 text-center">
+                      <Archive className="w-12 h-12 text-muted-foreground mx-auto mb-3 opacity-50" />
+                      <p className="text-muted-foreground text-sm">No files uploaded yet</p>
+                      <p className="text-muted-foreground text-xs mt-1">Upload a file to see it here</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-          )}
+
+            {/* Bottom action buttons */}
+            <div className="flex gap-4 mt-8">
+              <Button
+                className="flex-1 bg-white text-black hover:bg-white/90 font-semibold"
+                onClick={() => {
+                  if (uploadedFile && !fileSettings) {
+                    // Trigger settings completion with default values
+                    handleSettingsComplete({ expiryMinutes: 1440 });
+                  }
+                }}
+              >
+                <Archive className="w-4 h-4 mr-2" />
+                Generate Secure Link
+              </Button>
+              <Button
+                variant="outline"
+                className="flex-1 bg-black text-white border-white/20 hover:bg-black/80"
+                onClick={() => {
+                  if (generatedLink) {
+                    window.open(generatedLink, '_blank');
+                  }
+                }}
+              >
+                <LinkIcon className="w-4 h-4 mr-2" />
+                Test Download
+              </Button>
+            </div>
+          </div>
         </div>
       </main>
-
-      {/* Footer */}
-      <Footer />
     </div>
   );
 };
