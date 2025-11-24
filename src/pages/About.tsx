@@ -17,10 +17,10 @@ const About = () => {
             <div className="w-20 h-20 bg-primary rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-glow">
               <FileText className="w-10 h-10 text-white" />
             </div>
-            <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary via-secondary to-accent">
+            <h1 className="text-5xl font-bold mb-4 text-white">
               About GB Transfer
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl text-white max-w-2xl mx-auto">
               Fast, smooth, and secure file sharing with a delightful toon-vibed experience
             </p>
           </div>
@@ -31,10 +31,10 @@ const About = () => {
               <Sparkles className="w-8 h-8 text-secondary" />
               Our Mission
             </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              GB Transfer is created to make file sharing simple, secure, and fun. 
-              We believe that transferring files shouldn't be complicated or boring. 
-              That's why we've built a platform that combines powerful features with 
+            <p className="text-lg text-white leading-relaxed">
+              GB Transfer is created to make file sharing simple, secure, and fun.
+              We believe that transferring files shouldn't be complicated or boring.
+              That's why we've built a platform that combines powerful features with
               a playful, modern design that makes every interaction delightful.
             </p>
           </div>
@@ -52,7 +52,7 @@ const About = () => {
                   Upload and share files in seconds with our optimized infrastructure
                 </p>
               </div>
-              
+
               <div className="bg-card border-2 border-border rounded-2xl p-6 shadow-toon bounce-hover">
                 <div className="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center mb-4">
                   <Shield className="w-6 h-6 text-white" />
@@ -62,7 +62,7 @@ const About = () => {
                   Optional password protection and automatic expiry keep your files safe
                 </p>
               </div>
-              
+
               <div className="bg-card border-2 border-border rounded-2xl p-6 shadow-toon bounce-hover">
                 <div className="w-12 h-12 bg-accent rounded-xl flex items-center justify-center mb-4">
                   <FileText className="w-6 h-6 text-foreground" />
@@ -81,11 +81,11 @@ const About = () => {
             <div className="space-y-4 text-lg text-muted-foreground leading-relaxed">
               <p>
                 <span className="font-bold text-foreground">GB Transfer</span> is created by{" "}
-                <span className="font-bold text-primary">Girish Lade</span> — an engineer, 
+                <span className="font-bold text-primary">Girish Lade</span> — an engineer,
                 UI/UX designer, developer, and creator who blends simplicity with powerful tech.
               </p>
               <p>
-                He builds tools that feel smooth, modern, and fun. GB Transfer reflects his 
+                He builds tools that feel smooth, modern, and fun. GB Transfer reflects his
                 mission to deliver clean, accessible, intelligent online utilities for everyone.
               </p>
               <p className="italic">
