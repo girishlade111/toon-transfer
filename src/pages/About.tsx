@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowLeft, FileText, Sparkles, Shield, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Footer from "@/components/Footer";
 
 const About = () => {
   return (
@@ -108,6 +109,7 @@ const About = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

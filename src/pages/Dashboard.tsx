@@ -4,6 +4,7 @@ import { FileText, Clock, Lock, Trash2, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import Footer from "@/components/Footer";
 
 const Dashboard = () => {
   const [files, setFiles] = useState<any[]>([]);
@@ -186,6 +187,7 @@ const Dashboard = () => {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 };
