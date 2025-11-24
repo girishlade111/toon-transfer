@@ -11,7 +11,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchFiles();
-    
+
     // Set up real-time subscription
     const channel = supabase
       .channel("files-changes")
@@ -59,9 +59,9 @@ const Dashboard = () => {
     const now = new Date();
     const expiry = new Date(expireAt);
     const diff = expiry.getTime() - now.getTime();
-    
+
     if (diff < 0) return "Expired";
-    
+
     const minutes = Math.floor(diff / 60000);
     const hours = Math.floor(minutes / 60);
     const days = Math.floor(hours / 24);
@@ -81,10 +81,10 @@ const Dashboard = () => {
     try {
       // Delete from storage
       await supabase.storage.from("transfers").remove([filePath]);
-      
+
       // Delete from database
       await supabase.from("files").delete().eq("id", id);
-      
+
       toast.success("File deleted successfully");
     } catch (error) {
       console.error("Error deleting file:", error);
@@ -107,13 +107,13 @@ const Dashboard = () => {
       <div className="container mx-auto max-w-6xl">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary">
+            <h1 className="text-4xl font-bold mb-2 text-white">
               Dashboard
             </h1>
-            <p className="text-muted-foreground">Manage your file transfers</p>
+            <p className="text-white">Manage your file transfers</p>
           </div>
           <Link to="/">
-            <Button className="bg-primary text-white hover:bg-primary/90 bounce-hover">
+            <Button className="bg-black text-white hover:bg-black/80 bounce-hover">
               New Transfer
             </Button>
           </Link>
@@ -127,7 +127,7 @@ const Dashboard = () => {
               Upload your first file to get started
             </p>
             <Link to="/">
-              <Button className="bg-primary text-white hover:bg-primary/90 bounce-hover">
+              <Button className="bg-black text-white hover:bg-black/80 bounce-hover">
                 Create Transfer
               </Button>
             </Link>
@@ -143,10 +143,10 @@ const Dashboard = () => {
                   <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0">
                     <FileText className="w-6 h-6 text-white" />
                   </div>
-                  
+
                   <div className="flex-1 min-w-0">
                     <h3 className="font-bold text-lg truncate mb-1">{file.file_name}</h3>
-                    <div className="flex flex-wrap gap-3 text-sm text-muted-foreground">
+                    <div className="flex flex-wrap gap-3 text-sm text-white">
                       <span>{formatFileSize(file.file_size)}</span>
                       <span className="flex items-center gap-1">
                         <Clock className="w-3 h-3" />
@@ -167,7 +167,7 @@ const Dashboard = () => {
                       size="sm"
                       variant="outline"
                       onClick={() => handleCopyLink(file.link_id)}
-                      className="bounce-hover"
+                      className="bg-black text-white hover:bg-black/80 bounce-hover"
                     >
                       <Copy className="w-4 h-4" />
                     </Button>
