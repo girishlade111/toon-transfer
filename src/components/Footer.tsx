@@ -45,7 +45,17 @@ const Footer = () => {
           </a>
         ))}
       </div>
-      <p>Made with ✨ by Girish Lade</p>
+      <p>
+        Made with ✨ by Girish Lade |{" "}
+        <a
+          href="https://ladestack.in"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-primary transition-colors duration-200 font-medium"
+        >
+          Ladestack
+        </a>
+      </p>
     </footer>
   );
 };
