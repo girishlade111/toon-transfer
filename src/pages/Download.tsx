@@ -23,11 +23,12 @@ const Download = () => {
 
   const fetchFileData = async () => {
     try {
+      // Only select safe columns (exclude user_agent and file_path for security)
       const { data, error } = await supabase
         .from("files")
-        .select("*")
+        .select("id, link_id, file_name, file_size, file_type, expire_at, download_count, password_hash, created_at")
         .eq("link_id", linkId)
-        .single();
+        .maybeSingle();
 
       if (error) throw error;
 
@@ -76,9 +77,18 @@ const Download = () => {
 
     setDownloading(true);
     try {
+      // Fetch file_path securely after authentication
+      const { data: fileRecord, error: fetchError } = await supabase
+        .from("files")
+        .select("file_path")
+        .eq("id", fileData.id)
+        .single();
+
+      if (fetchError) throw fetchError;
+
       const { data, error } = await supabase.storage
         .from("transfers")
-        .download(fileData.file_path);
+        .download(fileRecord.file_path);
 
       if (error) throw error;
 
