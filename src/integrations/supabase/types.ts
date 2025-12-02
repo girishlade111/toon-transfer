@@ -61,7 +61,42 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      files_public: {
+        Row: {
+          created_at: string | null
+          download_count: number | null
+          expire_at: string | null
+          file_name: string | null
+          file_size: number | null
+          file_type: string | null
+          id: string | null
+          link_id: string | null
+          password_hash: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          download_count?: number | null
+          expire_at?: string | null
+          file_name?: string | null
+          file_size?: number | null
+          file_type?: string | null
+          id?: string | null
+          link_id?: string | null
+          password_hash?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          download_count?: number | null
+          expire_at?: string | null
+          file_name?: string | null
+          file_size?: number | null
+          file_type?: string | null
+          id?: string | null
+          link_id?: string | null
+          password_hash?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       delete_expired_files: { Args: never; Returns: undefined }
