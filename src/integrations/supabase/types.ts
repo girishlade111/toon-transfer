@@ -27,6 +27,7 @@ export type Database = {
           link_id: string
           password_hash: string | null
           user_agent: string | null
+          user_id: string | null
         }
         Insert: {
           created_at?: string
@@ -40,6 +41,7 @@ export type Database = {
           link_id: string
           password_hash?: string | null
           user_agent?: string | null
+          user_id?: string | null
         }
         Update: {
           created_at?: string
@@ -53,6 +55,7 @@ export type Database = {
           link_id?: string
           password_hash?: string | null
           user_agent?: string | null
+          user_id?: string | null
         }
         Relationships: []
       }

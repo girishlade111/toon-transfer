@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { FileText, Clock, Lock, Trash2, Copy } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { FileText, Clock, Lock, Trash2, Copy, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
+import { useAuth } from "@/hooks/useAuth";
 import Footer from "@/components/Footer";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const { user, loading: authLoading } = useAuth();
   const [files, setFiles] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchFiles();
+    if (!authLoading) {
+      fetchFiles();
+    }
 
     // Set up real-time subscription
     const channel = supabase
@@ -36,10 +41,22 @@ const Dashboard = () => {
 
   const fetchFiles = async () => {
     try {
-      const { data, error } = await supabase
+      let query = supabase
         .from("files")
         .select("*")
         .order("created_at", { ascending: false });
+
+      // If authenticated, only show user's files
+      if (user) {
+        query = query.eq("user_id", user.id);
+      } else {
+        // If not authenticated, show no files (empty state with login prompt)
+        setFiles([]);
+        setLoading(false);
+        return;
+      }
+
+      const { data, error } = await query;
 
       if (error) throw error;
       setFiles(data || []);
@@ -93,11 +110,39 @@ const Dashboard = () => {
     }
   };
 
-  if (loading) {
+  if (authLoading || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-bounce-in">
           <p className="text-xl font-semibold">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-6">
+        <div className="text-center max-w-md animate-bounce-in">
+          <div className="w-20 h-20 bg-primary/10 rounded-full mx-auto mb-6 flex items-center justify-center">
+            <LogIn className="w-10 h-10 text-primary" />
+          </div>
+          <h1 className="text-3xl font-bold mb-4">Sign In Required</h1>
+          <p className="text-muted-foreground mb-6">
+            Create an account or sign in to track your transfers and view your upload history.
+          </p>
+          <div className="flex gap-3 justify-center">
+            <Link to="/auth">
+              <Button className="bg-primary text-white hover:bg-primary/90 bounce-hover">
+                Sign In
+              </Button>
+            </Link>
+            <Link to="/">
+              <Button variant="outline" className="bounce-hover">
+                Back to Home
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     );

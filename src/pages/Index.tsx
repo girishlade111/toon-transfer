@@ -1,20 +1,32 @@
 import { useState } from "react";
-import { FileText, Shield, Clock, Eye, Check, Archive, FileImage, FileVideo, Link as LinkIcon } from "lucide-react";
+import { FileText, Shield, Clock, Eye, Check, Archive, FileImage, FileVideo, Link as LinkIcon, LogOut, User } from "lucide-react";
 import UploadZone from "@/components/UploadZone";
 import FileSettings from "@/components/FileSettings";
 import LinkDisplay from "@/components/LinkDisplay";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Progress } from "@/components/ui/progress";
 import Footer from "@/components/Footer";
+import { useAuth } from "@/hooks/useAuth";
+import { toast } from "sonner";
 
 const Index = () => {
+  const navigate = useNavigate();
+  const { user, signOut } = useAuth();
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [fileSettings, setFileSettings] = useState<{
     password?: string;
     expiryMinutes: number;
   } | null>(null);
   const [generatedLink, setGeneratedLink] = useState<string | null>(null);
+
+  const handleSignOut = async () => {
+    await signOut();
+    toast.success("Signed out successfully");
+    setUploadedFile(null);
+    setFileSettings(null);
+    setGeneratedLink(null);
+  };
   const [uploadProgress] = useState(100);
 
   const handleFileUpload = (file: File) => {
@@ -77,11 +89,38 @@ const Index = () => {
               <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
               <span className="text-xs font-medium text-success">Live Demo</span>
             </div>
-            <Link to="/dashboard">
-              <Button variant="ghost" size="sm" className="text-muted-foreground scale-hover-sm">
-                Dashboard
-              </Button>
-            </Link>
+            {user ? (
+              <>
+                <Link to="/dashboard">
+                  <Button variant="ghost" size="sm" className="text-muted-foreground scale-hover-sm">
+                    <User className="w-4 h-4 mr-2" />
+                    Dashboard
+                  </Button>
+                </Link>
+                <Button 
+                  variant="ghost" 
+                  size="sm"
+                  onClick={handleSignOut}
+                  className="text-muted-foreground scale-hover-sm"
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link to="/auth">
+                  <Button variant="ghost" size="sm" className="text-muted-foreground scale-hover-sm">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/dashboard">
+                  <Button variant="ghost" size="sm" className="text-muted-foreground scale-hover-sm">
+                    Dashboard
+                  </Button>
+                </Link>
+              </>
+            )}
             <Link to="/about">
               <Button variant="ghost" size="sm" className="text-muted-foreground scale-hover-sm">
                 About

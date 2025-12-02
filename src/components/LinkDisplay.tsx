@@ -3,6 +3,7 @@ import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import bcrypt from "bcryptjs";
+import { useAuth } from "@/hooks/useAuth";
 
 interface LinkDisplayProps {
   file: File;
@@ -15,6 +16,7 @@ interface LinkDisplayProps {
 
 const LinkDisplay = ({ file, settings, onLinkGenerated }: LinkDisplayProps) => {
   const [uploading, setUploading] = useState(true);
+  const { user } = useAuth();
 
   useEffect(() => {
     uploadFile();
@@ -55,6 +57,7 @@ const LinkDisplay = ({ file, settings, onLinkGenerated }: LinkDisplayProps) => {
           password_hash: passwordHash,
           expire_at: expireAt.toISOString(),
           user_agent: navigator.userAgent,
+          user_id: user?.id, // Link to user if authenticated
         });
 
       if (dbError) throw dbError;
