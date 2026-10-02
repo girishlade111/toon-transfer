@@ -1,73 +1,67 @@
-# Welcome to your Lovable project
+# Toon Transfer (GB Transfer)
 
-## Project info
+Fast and secure file-sharing web app: upload a file, optionally protect it with a password and set an expiry time, then share a generated download link. Recipients download via the link — no account needed for the downloader. Authenticated users get a dashboard of their shared links.
 
-**URL**: https://lovable.dev/projects/1a8b2a2d-8945-4117-85d9-f4eb8a733d3b
+## Features
 
-## How can I edit this code?
+- **File uploads** via drag-and-drop upload zone (Supabase Storage backend)
+- **Shareable download links** — one link per file, e.g. `/download/<link-id>`
+- **Password protection** — optional password on shared links
+- **Link expiry** — links auto-expire after a configurable time
+- **User auth** — sign up / sign in (Supabase Auth), personal dashboard of your links
+- **About + 404 pages**, dark-mode-ready shadcn/ui design
+- Fully client-side SPA — no server to run
 
-There are several ways of editing your application.
+## Tech Stack
 
-**Use Lovable**
+- React 18 + TypeScript
+- Vite (build) + React Router
+- Tailwind CSS + shadcn/ui (Radix primitives)
+- Supabase (Postgres, Auth, Storage) via `@supabase/supabase-js`
+- TanStack Query, react-hook-form, lucide-react
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/1a8b2a2d-8945-4117-85d9-f4eb8a733d3b) and start prompting.
+## Quick Start
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```bash
+git clone https://github.com/girishlade111/toon-transfer.git
+cd toon-transfer
+npm install --legacy-peer-deps
 ```
 
-**Edit a file directly in GitHub**
+Copy the Supabase config (a `.env` with `VITE_SUPABASE_URL` and
+`VITE_SUPABASE_PUBLISHABLE_KEY` is expected at project root) and run:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run dev      # local dev server
+npm run build    # production build -> dist/
+```
 
-**Use GitHub Codespaces**
+## Project Structure
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```
+├── src/
+│   ├── pages/        # Index, Download, Dashboard, Auth, About, NotFound
+│   ├── components/   # UploadZone, LinkDisplay, FileSettings, ui/*
+│   ├── hooks/        # useAuth, ...
+│   └── integrations/supabase/  # client + generated types
+├── supabase/         # migrations / config
+├── public/           # static assets
+├── vite.config.ts
+└── package.json
+```
 
-## What technologies are used for this project?
+## Deploy
 
-This project is built with:
+Static SPA (client-side Supabase calls only, no server). Any static host works.
+Currently deployed on GitHub Pages: https://girishlade111.github.io/toon-transfer/
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+The Vite `base` is set to `/toon-transfer/` and the router `basename` matches,
+so relative project-site hosting works out of the box.
 
-## How can I deploy this project?
+## License
 
-Simply open [Lovable](https://lovable.dev/projects/1a8b2a2d-8945-4117-85d9-f4eb8a733d3b) and click on Share -> Publish.
+MIT.
 
-## Can I connect a custom domain to my Lovable project?
+---
 
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Built by Girish Lade — https://ladestack.in
