@@ -17,7 +17,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename="/toon-transfer">
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/download/:linkId" element={<Download />} />
